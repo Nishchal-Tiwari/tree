@@ -1,0 +1,180 @@
+import java.util.*;
+class tree{
+Node root;
+int idx=-1; 
+class Node 
+{
+    int data;
+    Node r;
+    Node l;
+    Node(int a)
+    {
+        data=a;
+    }
+}
+
+public void preorder(Node x)
+{
+    if(x==null)
+    {
+        return;
+    }
+    System.out.print(x.data+" ");
+    preorder(x.l);
+    preorder(x.r);
+}
+public void postorder(Node x)
+{
+    if(x==null)
+    {
+        return;
+    }
+    
+    postorder(x.l);
+    postorder(x.r);
+    System.out.print(x.data+" ");
+}
+public void inorder(Node x)
+{
+    if(x==null)
+    {
+        return;
+    }
+    
+    inorder(x.l);
+    System.out.print(x.data+" ");
+    inorder(x.r);
+}
+public void levelorder(Node x)
+{
+    Queue<Node> q1=new LinkedList<>();
+    q1.add(x);
+    while(true)
+    {
+        if(q1.isEmpty())
+        {
+            break;
+        }
+        if(q1.peek().l!=null)
+        {
+            q1.add(q1.peek().l);
+        }
+        if(q1.peek().r!=null)
+        {
+            q1.add(q1.peek().r);
+        }
+        System.out.print(q1.poll().data+" ");
+    }
+    
+}
+public int  height(Node x)
+{
+    if(x==null)
+    {
+        return 0 ;
+    }
+    int lh=height(x.l);
+    int rh=height(x.r);
+    if(lh>rh)
+    {
+        return lh+1;
+    }
+    else
+    {
+        return rh+1;
+    }
+    
+}
+public int diameter(Node x)
+{
+    if(x==null)
+    {
+        return 0;
+    }
+    int lh=height(x.l);
+    int rh=height(x.r);
+    return lh+rh+1;
+}
+public Node create_tree(int arr[])
+{
+    idx++;
+    if(arr[idx]==-1)
+    {
+        return null;
+    }
+    Node n1=new Node(arr[idx]);
+    
+    n1.l=create_tree(arr);
+    n1.r=create_tree(arr);
+    return n1;
+}
+// bad way of doing it 
+
+// public int sum_of_nodes(Node x)
+// { 
+    
+//     if(x==null)
+//     {
+//         return 0;
+//     }
+//     x.data=x.data+sum_of_nodes(x.l);
+//     x.data=x.data+sum_of_nodes(x.r);
+//     return x.data;
+// }
+
+// good way
+
+public int sum_of_nodes(Node x)
+{ 
+    
+    if(x==null)
+    {
+        return 0;
+    }
+    int left=sum_of_nodes(x.l);
+    int right=sum_of_nodes(x.r);
+    return left+right+x.data;
+}
+
+    
+}
+public class Main
+{
+    
+	public static void main(String[] args) {
+		tree t1=new tree();
+		t1.root=t1.new Node(10);
+		
+		t1.root.l=t1.new Node(20);
+		t1.root.r=t1.new Node(30);
+		t1.root.l.l=t1.new Node(40);
+		t1.root.l.r=t1.new Node(50);
+		t1.root.r.l=t1.new Node(60);
+		t1.root.r.r=t1.new Node(70);
+// 		t1.preorder(t1.root);
+// 		System.out.println('\n');
+
+// 		t1.inorder(t1.root);
+// 		System.out.println('\n');
+
+// 		t1.postorder(t1.root);
+//      System.out.println('\n');
+
+// 		t1.levelorder(t1.root);
+//      System.out.println('\n');
+
+//      System.out.println(t1.height(t1.root));
+//      System.out.println('\n');
+
+//      System.out.println(t1.diameter(t1.root));
+//      System.out.println('\n'); 
+
+//      int arr[]={10,20,40,-1,-1,50,-1,-1,30,60,-1,-1,70,-1,-1};
+//      t1.root=t1.create_tree(arr); 
+//      t1.preorder(t1.root);
+//      System.out.println('\n');
+
+//      System.out.println(t1.sum_of_nodes(t1.root));
+//      System.out.println('\n');
+	}
+}
